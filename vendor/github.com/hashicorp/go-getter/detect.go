@@ -1,3 +1,6 @@
+// Copyright IBM Corp. 2015, 2025
+// SPDX-License-Identifier: MPL-2.0
+
 package getter
 
 import (
@@ -23,6 +26,7 @@ var Detectors []Detector
 func init() {
 	Detectors = []Detector{
 		new(GitHubDetector),
+		new(GitLabDetector),
 		new(GitDetector),
 		new(BitBucketDetector),
 		new(S3Detector),
@@ -78,7 +82,7 @@ func Detect(src string, pwd string, ds []Detector) (string, error) {
 		if subDir != "" {
 			u, err := url.Parse(result)
 			if err != nil {
-				return "", fmt.Errorf("Error parsing URL: %s", err)
+				return "", fmt.Errorf("Error parsing URL: %w", err)
 			}
 			u.Path += "//" + subDir
 
